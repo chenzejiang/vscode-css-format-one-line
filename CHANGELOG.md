@@ -1,9 +1,9 @@
-# Change Log
+### 1.2.0 (2019-07-10)
+* 修改说明MD
+* 增加更新日志MD
 
-All notable changes to the "css-format-one-line" extension will be documented in this file.
+### 1.1.0 (2019-07-10)
+* 增加格式化为多行CSS功能
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
-
-## [Unreleased]
-
-- Initial release
+### 1.0.0 (2019-06-4)
+* 完成功能格式化为单行CSS
