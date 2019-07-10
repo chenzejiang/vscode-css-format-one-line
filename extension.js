@@ -3,44 +3,61 @@ const vscode = require('vscode');
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
-	console.log('activate ========================================================');
-	let disposable = vscode.commands.registerCommand('extension.helloWorld', function () {
-		insertCloseTag();
+	let cssFormatSingleLine = vscode.commands.registerCommand('extension.cssFormatSingleLine', function () {
+		cssFormatSingleLineFun();
 	});
-	context.subscriptions.push(disposable);
+	let cssFormatMultipleLine = vscode.commands.registerCommand('extension.cssFormatMultipleLine', function () {
+		cssFormatMultipleLineFun();
+	});
+	context.subscriptions.push(cssFormatSingleLine);
+	context.subscriptions.push(cssFormatMultipleLine);
 }
 exports.activate = activate;
 
-// 停止插件触发
 function deactivate() {}
 
-function insertCloseTag(){
+function cssFormatSingleLineFun(){
 	var editor = vscode.window.activeTextEditor;
 	if (!editor) {
 		return;
 	}
 	var selection = editor.selection;
-	// let originalPosition = selection.start; // 开始匹配位置
 	var text = editor.document.getText(selection);
 	var code = new cssCodeFormat(text);
 	var singleLine = code.singleLine();
 
 	editor.edit((editBuilder) => {
-		// editBuilder.insert(originalPosition, 'webJ');
 		editBuilder.replace(selection, singleLine);
 		// vscode.window.showInformationMessage('css格式化单行成功');
 	});
 }
 
-function cssCodeFormat(_str){
-	this.S= function(){
+function cssFormatMultipleLineFun(){
+	var editor = vscode.window.activeTextEditor;
+	if (!editor) {
+		return;
+	}
+	var selection = editor.selection;
+	var text = editor.document.getText(selection);
+	var code = new cssCodeFormat(text);
+	var multipleLine = code.multipleLine();
+
+	editor.edit((editBuilder) => {
+		editBuilder.replace(selection, multipleLine);
+		// vscode.window.showInformationMessage('css格式化多行成功');
+	});
+}
+
+
+function cssCodeFormat(_str) {
+	this.S = function(){
 		var code = _str;
 		code=code.replace(/(\n|\t|\s)*/ig,'$1');
 		code=code.replace(/\n|\t|\s(\{|\}|\,|\:|\;)/ig,'$1');
 		code=code.replace(/(\{|\}|\,|\:|\;)\s/ig,'$1');
 		return code;
 	}
-	this.multipleLines=function(){
+	this.multipleLine = function() {
 		var code=this.S();
 		code=code.replace(/(\{)/ig,' $1');
 		code=code.replace(/(\{|\;)/ig,'$1\n\t');
@@ -48,7 +65,7 @@ function cssCodeFormat(_str){
 		code=code.replace(/(\*\/)/ig,'$1\n');
 		return code;
 	}
-	this.singleLine=function(){
+	this.singleLine = function(){
 		var code=this.S();
 		code=code.replace(/(\})/ig,'$1\n');
 		code=code.replace(/(\*\/)/ig,'$1\n');

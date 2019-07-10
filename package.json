@@ -1,32 +1,43 @@
 {
 	"name": "css-format-one-line",
 	"displayName": "css-format-one-line",
-	"description": "css格式化为单行",
-	"version": "1.0.0",
+	"description": "css格式化! 支持单行, 多行",
+	"version": "1.2.0",
 	"publisher":"css-format-one-line",
 	"icon": "images/logo128.png",
 	"engines": {
-		"vscode": "^1.34.0"
+		"vscode": "^1.33.0"
 	},
 	"categories": [
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.helloWorld"
+		"onCommand:extension.cssFormatSingleLine",
+		"onCommand:extension.cssFormatMultipleLine"
 	],
 	"main": "./extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "extension.helloWorld",
-				"title": "Hello World"
+				"command": "extension.cssFormatSingleLine",
+				"title": "格式化CSS为单行"
+			},
+			{
+				"command": "extension.cssFormatMultipleLine",
+				"title": "格式化CSS为多行"
 			}
 		],
         "keybindings": [
             {
-                "command": "extension.helloWorld",
+                "command": "extension.cssFormatSingleLine",
                 "key": "ctrl+j",
                 "mac": "cmd+j",
+                "when": "editorTextFocus"
+			},
+			{
+                "command": "extension.cssFormatMultipleLine",
+                "key": "ctrl+i",
+                "mac": "cmd+i",
                 "when": "editorTextFocus"
 			}
         ]
